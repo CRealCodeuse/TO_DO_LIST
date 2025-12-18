@@ -1,0 +1,82 @@
+header,body,footer, button {
+    font-family: "Borel"; /*Police dans toute la page*/
+}
+
+header {
+    font-family: "Borel"; /*Police dans tout le header*/
+    font-weight: 400; /*Epaisseur de texte*/
+    font-style: normal; /*Style d'écriture*/
+    font-size: 50px; /*Taille de la police*/
+    background-color: aquamarine; /*Couleur de fond du header*/
+    border-radius: 15px; /*Arrondi des coins du background*/
+    text-align: center; /*Alignement horizontal du texte*/
+    padding: 20px 0 0 0; /*espace entre le texte et le bord du background*/
+    margin-bottom: 25px; /*espace autour de la bordure du bas*/
+}
+
+body {
+    background-color: antiquewhite;
+}
+
+table {
+    display: flex; /*s'adapte à la largeur de la page*/
+    flex-direction: column; /*Important !*/
+    outline: 3px solid black; /*bordure outline*/
+    border-radius: 10px; /*arrondissement de la bordure*/
+    margin: 15px; /*marges de 15px de tous les côtés*/
+    width: calc(100% - 30px); /*100% - les (15px x 2) de la marge sur la gauche et droite*/
+    box-sizing: border-box; /**/
+    
+    padding: 10px;
+}
+
+tr {
+    display: flex;
+    width: 100%; /*largeur de la ligne 100% de la table*/
+}
+
+th, td {
+    flex: 1;
+    text-align: center; /*alignement du texte*/
+    border: 1px solid black; /*bordure*/
+    border-radius: 10px; /*arrondissement des coins*/
+    box-sizing: border-box; /**/
+    min-width: 0; /* Empêche le débordement du contenu */
+}
+
+th {
+    font-size: 25px; /*taille de la police*/
+    font-style: italic; /*style d'écriture*/
+    margin-bottom: 10px; /*marge en bas*/
+    background-color: aquamarine; /*couleur de fond des cellulles de la ligne 1*/
+    border: 3px solid black;
+    padding-top: 10px;
+}
+
+td {
+    background-color:whitesmoke;
+    padding-top: 10px;
+}
+
+td:hover{
+    background-color: lightgrey;
+}
+
+button {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: aquamarine;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+button:hover{
+    background-color: mediumaquamarine;
+    transform: rotate(5deg); /* Rotation */
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.9);
+}
+
+div {
+    text-align: center;
+}
+
