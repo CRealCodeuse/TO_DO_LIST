@@ -44,9 +44,9 @@ cells.forEach(cell => {
     });
 });
 
-const buttons = document.querySelectorAll('button'); // Sélectionner tous les boutons
+const Empty = document.querySelectorAll('button[class="Empty"]'); // Sélectionner tous les boutons
 
-buttons.forEach(button => { // Pour chaque bouton
+Empty.forEach(button => { // Pour chaque bouton
     button.addEventListener('click', function() { // Au clic sur le bouton
         cells.forEach(cell => { // Pour chaque cellule
             // Si la cellule contient "..."
