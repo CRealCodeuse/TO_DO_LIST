@@ -1,8 +1,8 @@
-header,body,footer, button {
+header,body,footer, button { /* Police dans toute la page */
     font-family: "Borel"; /*Police dans toute la page*/
 }
 
-header {
+header { /*ENTETE DE LA PAGE*/
     font-family: "Borel"; /*Police dans tout le header*/
     font-weight: 400; /*Epaisseur de texte*/
     font-style: normal; /*Style d'écriture*/
@@ -14,69 +14,72 @@ header {
     margin-bottom: 25px; /*espace autour de la bordure du bas*/
 }
 
-body {
-    background-color: antiquewhite;
+body { /*CORPS DE LA PAGE*/
+    background-color: antiquewhite; /*Couleur de fond de la page*/
 }
 
-table {
+h3 { /*Sous-titre de la page*/
+    margin: 20px; /*marges de 20px de tous les côtés*/
+}
+
+table { /*ensemble du tableau*/
     display: flex; /*s'adapte à la largeur de la page*/
     flex-direction: column; /*Important !*/
     outline: 3px solid black; /*bordure outline*/
     border-radius: 10px; /*arrondissement de la bordure*/
     margin: 15px; /*marges de 15px de tous les côtés*/
     width: calc(100% - 30px); /*100% - les (15px x 2) de la marge sur la gauche et droite*/
-    box-sizing: border-box; /**/
-    
-    padding: 10px;
+    box-sizing: border-box; /*inclure la bordure et la marge dans la largeur totale*/
+    padding: 10px; /*espace entre le contenu et la bordure*/
 }
 
-tr {
-    display: flex;
+tr { /*ligne du tableau*/
+    display: flex; /*s'adapte à la largeur de la page*/
     width: 100%; /*largeur de la ligne 100% de la table*/
 }
 
-th, td {
-    flex: 1;
+th, td { /*cellules de la table*/
+    flex: 1; /*chaque cellule prend une part égale de l'espace disponible*/
     text-align: center; /*alignement du texte*/
     border: 1px solid black; /*bordure*/
     border-radius: 10px; /*arrondissement des coins*/
-    box-sizing: border-box; /**/
+    box-sizing: border-box; /*inclure la bordure et la marge dans la largeur totale*/
     min-width: 0; /* Empêche le débordement du contenu */
 }
 
-th {
+th { /*cellules de la ligne 1*/
     font-size: 25px; /*taille de la police*/
     font-style: italic; /*style d'écriture*/
     margin-bottom: 10px; /*marge en bas*/
     background-color: aquamarine; /*couleur de fond des cellulles de la ligne 1*/
-    border: 3px solid black;
-    padding-top: 10px;
+    border: 3px solid black; /*bordure des cellules de la ligne 1*/
+    padding-top: 10px; /*espace entre le texte et le bord de la cellule*/
 }
 
-td {
-    background-color:whitesmoke;
-    padding-top: 10px;
+td { /*cellules des autres lignes*/
+    background-color:whitesmoke; /*couleur de fond des cellules des autres lignes*/
+    padding-top: 10px; /*espace entre le texte et le bord de la cellule*/
 }
 
-td:hover{
-    background-color: lightgrey;
+td:hover{ /*Effet au survol des cellules des autres lignes*/
+    background-color: lightgrey; /*couleur de fond au survol*/
 }
 
-button {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: aquamarine;
-    border-radius: 10px;
-    font-size: 20px;
+button { /*bouton*/
+    margin: 15px; /*marge en haut*/
+    padding: 15px; /*espace entre le texte et le bord du bouton*/
+    background-color: aquamarine; /*couleur de fond du bouton*/
+    border-radius: 10px; /*arrondissement des coins du bouton*/
+    font-size: 20px; /*taille de la police*/
 }
 
-button:hover{
-    background-color: mediumaquamarine;
+button:hover{ /*Effet au survol du bouton*/
+    background-color: mediumaquamarine; /*couleur de fond au survol*/
     transform: rotate(5deg); /* Rotation */
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.9);
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.9); /* Ombre */
 }
 
-div {
-    text-align: center;
+div { /*Conteneur du bouton*/
+    text-align: center; /*Alignement horizontal du bouton*/
 }
 
