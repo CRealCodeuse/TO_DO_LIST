@@ -31,6 +31,7 @@ table { /*ensemble du tableau*/
     width: calc(100% - 30px); /*100% - les (15px x 2) de la marge sur la gauche et droite*/
     box-sizing: border-box; /*inclure la bordure et la marge dans la largeur totale*/
     padding: 10px; /*espace entre le contenu et la bordure*/
+    box-shadow: 0 10px 10px 5px rgba(0,0,0,0.6); /* Ombre */
 }
 
 tr { /*ligne du tableau*/
@@ -71,6 +72,7 @@ button { /*bouton*/
     background-color: aquamarine; /*couleur de fond du bouton*/
     border-radius: 10px; /*arrondissement des coins du bouton*/
     font-size: 20px; /*taille de la police*/
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.9); /* Ombre */
 }
 
 button:hover{ /*Effet au survol du bouton*/
