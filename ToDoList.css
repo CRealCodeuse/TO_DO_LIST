@@ -11,7 +11,7 @@ header { /*ENTETE DE LA PAGE*/
     border-radius: 15px; /*Arrondi des coins du background*/
     text-align: center; /*Alignement horizontal du texte*/
     padding: 20px 0 0 0; /*espace entre le texte et le bord du background*/
-    margin-bottom: 25px; /*espace autour de la bordure du bas*/
+    margin-bottom: 10px; /*espace autour de la bordure du bas*/
 }
 
 body { /*CORPS DE LA PAGE*/
@@ -19,7 +19,7 @@ body { /*CORPS DE LA PAGE*/
 }
 
 h3 { /*Sous-titre de la page*/
-    margin: 20px; /*marges de 20px de tous les côtés*/
+    margin: 15px; /*marges de 20px de tous les côtés*/
 }
 
 table { /*ensemble du tableau*/
