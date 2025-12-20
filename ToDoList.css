@@ -57,12 +57,12 @@ th { /*cellules de la ligne 1*/
     padding-top: 10px; /*espace entre le texte et le bord de la cellule*/
 }
 
-td { /*cellules des autres lignes*/
+.case,td { /*cellules des autres lignes*/
     background-color:whitesmoke; /*couleur de fond des cellules des autres lignes*/
     padding-top: 10px; /*espace entre le texte et le bord de la cellule*/
 }
 
-td:hover{ /*Effet au survol des cellules des autres lignes*/
+.checkbox:hover,.case:hover{ /*Effet au survol des cellules des autres lignes*/
     background-color: lightgrey; /*couleur de fond au survol*/
 }
 
