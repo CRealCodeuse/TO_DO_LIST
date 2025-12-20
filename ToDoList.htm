@@ -1,17 +1,17 @@
-<html lang="en">
+<html lang="en"> <!--Langue de la page-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"> <!--Encodage des caractères-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--Adaptation de la page aux différentes tailles d'écran-->
 
-    <title>To Do List</title>
+    <title>To Do List</title> <!--Titre de la page-->
 
     <link rel="stylesheet" href="ToDoList.css"> <!--Lien avec la page CSS-->
 
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script> <!--Lien avec le python sur Pyscript-->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Borel&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!--Lien avec la police d'écriture Borel-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!--Lien avec la police d'écriture Borel-->
+    <link href="https://fonts.googleapis.com/css2?family=Borel&display=swap" rel="stylesheet"> <!--Lien avec la police d'écriture Borel-->
 
 </head>
 
@@ -21,17 +21,17 @@
 
 <body> <!--CORPS DE LA PAGE-->
 
-    <div>
-        <button class="Francais">Français</button>
-        <button class="Theme">Thème sombre</button>
+    <div> <!--Div pour les boutons en haut à droite-->
+        <button class="Francais">Français</button> <!--Bouton pour passer en français-->
+        <button class="Theme">Thème sombre</button> <!--Bouton pour passer en thème sombre-->
     </div>
 
-    <h3>
-        Hey there ! 
-        <br> Here is a simple to-do list where you can write down your tasks for today (or for the week).
-        <br> Just click on a cell to edit it and add your tasks. 
-        <br> When you're done, you can click the button below to clear all the tasks and start fresh.
-    </h3> <!--Sous-titre de la page-->
+    <h3> <!--Sous-titre de la page-->
+        Hey there ! <br> 
+        Here is a simple to-do list where you can write down your tasks for today (or for the week). <br>
+        Just click on a cell to edit it and add your tasks. <br>
+        When you're done, you can click the button below to clear all the tasks and start fresh.
+    </h3>
 
     <table> <!-- Ensemble du tableau -->
         <tr> <!--Ligne 1-->
@@ -102,14 +102,16 @@
         </tr>
     </table>
 
-        <div>
-            <button class="Empty">Empty the tasks</button> <!-- Bouton pour vider les tâches -->
-        </div>
+    <div> <!--Div pour le bouton en bas-->
+        <button class="Empty">Empty the tasks</button> <!-- Bouton pour vider les tâches -->
+    </div>
         
    <script src="ToDoList.js"></script> <!--Lien avec la page JavaScript-->
 
 </body>
+
 <footer> <!--BAS DE PAGE-->
 
 </footer>
+
 </html>
