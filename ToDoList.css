@@ -57,12 +57,12 @@ th { /*cellules de la ligne 1*/
     padding-top: 10px; /*espace entre le texte et le bord de la cellule*/
 }
 
-td { /*cellules des autres lignes*/
+.case,td { /*cellules des autres lignes*/
     background-color:whitesmoke; /*couleur de fond des cellules des autres lignes*/
     padding-top: 10px; /*espace entre le texte et le bord de la cellule*/
 }
 
-td:hover{ /*Effet au survol des cellules des autres lignes*/
+.case:hover{ /*Effet au survol des cellules des autres lignes*/
     background-color: lightgrey; /*couleur de fond au survol*/
 }
 
@@ -84,4 +84,21 @@ button:hover{ /*Effet au survol du bouton*/
 div { /*Conteneur du bouton*/
     text-align: center; /*Alignement horizontal du bouton*/
 }
+.checkbox { /*case à cocher*/
+    width: 20px; /*largeur de la case*/
+    height: 20px; /*hauteur de la case*/
+    margin-right: 5px; /*espace entre la case et le texte*/;
+    vertical-align: middle; /*aligne verticalement la checkbox*/
+    appearance: none; /*supprime le style par défaut*/
+    border: 2px solid black; /*bordure de la case*/
+    border-radius: 5px;
+}
 
+.checkbox:hover { /*Effet au survol de la case à cocher*/
+    transform: scale(1.2); /*agrandissement*/
+    cursor: pointer; /*curseur en forme de main*/
+}
+
+.checkbox:checked { /*personnalisation de la coche*/
+    background-color: aquamarine;
+}
