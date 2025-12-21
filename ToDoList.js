@@ -271,7 +271,7 @@ Francais.addEventListener('click', function() { // Au clic sur le bouton
         'Do the site\'s template': 'Faire le modèle du site',
         'Hey there !': 'Bienvenue !',
         'Here is a simple to-do list where you can write down your tasks for today (or for the week).': 'Voici ta propre liste de tâches où tu peux écrire tout ce que tu as à faire pour aujourd\'hui (ou dans la semaine).',
-        'Just click on a cell to edit it and add your tasks.': 'Tu peux cliquer sur une cellule et modifier son contenu.', 
+        'Just click on a cell to edit it and add your tasks. You also can edit the head cells if needed.': 'Tu peux cliquer sur une cellule et modifier son contenu. Tu peux aussi modifier les cellules d\'en-tête si nécessaire.',
         'When you\'re done, you can click the button below to clear all the tasks and start fresh.': 'Lorsque tu as terminé toutes tes tâches, clique simplement sur le bouton \'Vider les tâches\' et tu pourras reommencer une nouvelle liste.',
         'Groceries': 'Courses',
         'School/Work': 'École/Travail',
