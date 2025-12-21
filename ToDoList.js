@@ -236,13 +236,23 @@ cell.addEventListener('keydown', function(e) {  // Au keydown
 const Empty = document.querySelector('button[class="Empty"]'); // Sélectionner le bouton "Empty"
 
 Empty.addEventListener('click', function() { // Au clic sur le bouton
+    // VÉRIFIER LA LANGUE EN PREMIER
+    const frenchButton = document.querySelector('.Francais');
+    const isFrench = frenchButton && frenchButton.classList.contains('clicked');
     // Définir les valeurs par défaut pour chaque cellule
-    const defaultValues = [ // Valeurs par défaut
-        'Buy tomatoes', // Cellule 1
-        'Review the math lesson', // Cellule 2
-        'Wash the dishes', // Cellule 3
-        'Do the site\'s template', // Cellule 4
-        '...' // Cellule 5 et les suivantes
+    // Définir les valeurs par défaut SELON LA LANGUE
+    const defaultValues = isFrench ? [
+        'Acheter des tomates',
+        'Réviser la leçon de maths',
+        'Faire la vaisselle',
+        'Faire le modèle du site',
+        '...'
+    ] : [
+        'Buy tomatoes',
+        'Review the math lesson',
+        'Wash the dishes',
+        'Do the site\'s template',
+        '...'
     ];
     
     // Vérifier si des tâches modifiées ne sont pas cochées
@@ -253,34 +263,15 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
         const checkbox = cell.querySelector('.checkbox'); // Récupérer la checkbox
         const textContent = cell.textContent.trim(); // Récupérer le texte
         
-        // Si la cellule a été modifiée (différente des valeurs par défaut) et checkbox non cochée
-        if (textContent !== '' && // Pas vide
-            textContent !== '...' && // Pas valeur par défaut
-            textContent !== 'Buy tomatoes' && // Pas valeur par défaut
-            textContent !== 'Review the math lesson' && // Pas valeur par défaut
-            textContent !== 'Wash the dishes' && // Pas valeur par défaut
-            textContent !== 'Do the site\'s template' && // Pas valeur par défaut
-            checkbox && // Si la checkbox existe
-            !checkbox.checked) { // Et non cochée
-            
+        // Si modifié ET non coché
+        if (textContent !== '' && !defaultValues.includes(textContent) && checkbox && !checkbox.checked) {
             hasUnfinishedTasksEnglish = true; // Marquer comme tâche non terminée
         }
-        else if (textContent === '' && // Si vide
-                 textContent === '...' && // Ou valeur par défaut
-                 textContent === 'Acheter des tomates' && // Ou valeur par défaut
-                 textContent === 'Réviser la leçon de maths' && // Ou valeur par défaut
-                 textContent === 'Faire la vaisselle' && // Ou valeur par défaut
-                 textContent === 'Faire le modèle du site' && // Ou valeur par défaut) 
-                 checkbox && // Si la checkbox existe
-                 !checkbox.checked) { // Et non cochée
-            
-                hasUnfinishedTasksFrench = true; // Marquer comme tâche non terminée
+        // Si modifié ET non coché
+        if (textContent !== '' && !defaultValues.includes(textContent) && checkbox && !checkbox.checked) {
+            hasUnfinishedTasksFrench = true; // Marquer comme tâche non terminée
         }
     });
-    
-    // Vérifier la langue UNE SEULE FOIS au début
-    const frenchButton = document.querySelector('.Francais'); // Sélectionner le bouton "Francais"
-    const isFrench = frenchButton && frenchButton.classList.contains('clicked'); // Vérifier si le bouton a été cliqué (indiquant le français)
     
     // Si des tâches ne sont pas terminées, afficher un Toast
     if (hasUnfinishedTasksEnglish) { // Si des tâches non terminées en anglais
@@ -288,8 +279,8 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
     return; // Sortir de la fonction
     }
     if (hasUnfinishedTasksFrench) { // Si des tâches non terminées en français
-        showToast("Tu n'as pas fini toutes tes tâches !", 'error'); // Afficher le message en français
-        return; // Sortir de la fonction
+    showToast("Tu n'as pas fini toutes tes tâches !", 'error'); // Afficher le message en français
+    return; // Sortir de la fonction
     }
     
     // Sinon, réinitialiser toutes les cellules
@@ -304,13 +295,13 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
             checkbox.className = 'checkbox'; // Définir la classe
             checkbox.title = 'checkbox'; // Définir le titre
             checkbox.contentEditable = 'false'; // Rendre non éditable
-            checkbox.onclick = function(event) { 
+            checkbox.onclick = function(event) {  // Empêcher la propagation du clic
                 event.stopPropagation(); // Empêcher la propagation
             };
         }
         
         // Réinitialiser l'état de la checkbox (décochée)
-        checkbox.checked = false;
+        checkbox.checked = false; // Décocher la checkbox
         
         // Réinitialiser le contenu de la cellule
         const defaultText = defaultValues[index] || '...'; // Texte par défaut selon l'index
@@ -320,14 +311,14 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
     });
     
     // Afficher un Toast de succès
-    const successMessage = isFrench ? 
+    const successMessage = isFrench ? // Vérifier la langue
         "Génial ! De nouvelles tâches arrivent !" : // Message en français
         "Good Job! New tasks incoming!"; // Message en anglais
     showToast(successMessage, 'success'); // Afficher le message
 });
 
 // Fonction pour afficher un Toast
-function showToast(message, type = 'info') { // 
+function showToast(message, type = 'info') { // Afficher un toast 
     const toast = document.createElement('div'); // Créer un élément div pour le toast
     toast.textContent = message; // Définir le message
     
@@ -421,6 +412,15 @@ Francais.addEventListener('click', function() { // Au clic sur le bouton
             });
         }
     });
+
+    // AJOUTER/RETIRER LA CLASSE 'clicked'
+    if (isTranslated) {
+        // Retour à l'anglais
+        this.classList.remove('clicked');
+    } else {
+        // Passage au français
+        this.classList.add('clicked');
+    }
     
     // Inverser l'état
     isTranslated = !isTranslated; // Changer l'état de traduction
