@@ -1,7 +1,7 @@
 // Sélectionner toutes les cellules éditables
 const cells = document.querySelectorAll('td[contenteditable="true"]');
 
-// Pour chaque cellule
+// GÉRER L'ÉDITION DES CELLULES
 cells.forEach(cell => { // Pour chaque cellule
     // Marquer si la cellule a été modifiée
     let hasBeenModified = false; // Initialement non modifiée
@@ -61,7 +61,7 @@ cells.forEach(cell => { // Pour chaque cellule
         }
     });
 
-    // Forcer le curseur à se placer après la checkbox
+//FORCER LE CURSEUR APRÈS LA CHECKBOX AU CLIC
 cell.addEventListener('click', function(e) { // Au clic dans la cellule
     const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
     
@@ -89,7 +89,7 @@ cell.addEventListener('click', function(e) { // Au clic dans la cellule
     }
 });
 
-// Empêcher le curseur de revenir avant la checkbox avec les touches
+//EMPECHER L'ÉCRITURE AVANT LA CHECKBOX
 cell.addEventListener('keydown', function(e) {  // Au keydown
     const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
     const selection = window.getSelection(); // Récupérer la sélection
@@ -218,6 +218,7 @@ cell.addEventListener('keydown', function(e) {  // Au keydown
 });
 });
 
+// BOUTON VIDER LES TÂCHES
 const Empty = document.querySelector('button[class="Empty"]'); // Sélectionner le bouton "Empty"
 
 Empty.addEventListener('click', function() { // Au clic sur le bouton
@@ -257,6 +258,7 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
     });
 });
 
+//TRADUCTION FRANÇAIS/ANGLAIS
 const Francais = document.querySelector('button[class="Francais"]'); // Sélectionner le bouton "Français"
 
 let isTranslated = false; // Variable pour suivre l'état de traduction
@@ -308,6 +310,7 @@ Francais.addEventListener('click', function() { // Au clic sur le bouton
     isTranslated = !isTranslated; // Changer l'état de traduction
 });
 
+//THEME SOMBRE/CLAIR
 const Theme = document.querySelector('button[class="Theme"]'); // Sélectionner le bouton "Thème"
 
 let isDarkMode = false; // Variable pour suivre l'état du thème
