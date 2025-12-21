@@ -87,8 +87,42 @@ cell.addEventListener('keydown', function(e) {  // Au keydown
     if (checkbox && selection.anchorOffset === 0) { 
         // Si on est à la position 0 (avant la checkbox)
         
-        // Bloquer TOUTE saisie de caractères (lettres, chiffres, symboles, espace, etc.)
-        if (e.key.length === 1 || e.key === 'Enter' || e.key === ' ') {
+        // TRAITER ENTER EN PREMIER (avant de le bloquer)
+        if (e.key === 'Enter') { // Si Enter
+            e.preventDefault(); // Empêcher le retour à la ligne
+            
+            // Trouver l'index de la cellule actuelle
+            const currentCell = this; // Cellule actuelle
+            const currentIndex = Array.from(cells).indexOf(currentCell); // Index de la cellule actuelle
+            
+            // Calculer l'index de la cellule en dessous (même colonne, ligne suivante)
+            const columnsPerRow = 4; // Nombre de colonnes dans le tableau
+            const nextIndex = currentIndex + columnsPerRow; // Index de la cellule en dessous
+            
+            // Si la cellule suivante existe
+            if (nextIndex < cells.length) { // Si la cellule en dessous existe
+                const nextCell = cells[nextIndex]; // Récupérer la cellule en dessous
+                nextCell.focus(); // Placer le focus sur la cellule en dessous
+                
+                // Placer le curseur après la checkbox de la cellule suivante
+                const nextCheckbox = nextCell.querySelector('.checkbox'); // Récupérer la checkbox de la cellule suivante
+                const range = document.createRange(); // Créer une nouvelle plage
+                const newSelection = window.getSelection(); // Récupérer la sélection
+                
+                if (nextCheckbox) { // Si la checkbox existe
+                    range.setStartAfter(nextCheckbox); // Définir le début après la checkbox
+                } else { // Si pas de checkbox (au cas où)
+                    range.selectNodeContents(nextCell); // Sélectionner tout le contenu de la cellule
+                }
+                range.collapse(true); // Collapser la plage
+                newSelection.removeAllRanges(); // Supprimer les plages existantes
+                newSelection.addRange(range); // Ajouter la nouvelle plage
+            }
+            return; // Sortir de la fonction
+        }
+        
+        // Bloquer TOUTE autre saisie de caractères (lettres, chiffres, symboles, espace, etc.)
+        if (e.key.length === 1 || e.key === ' ') { // Si une touche de caractère ou espace
             e.preventDefault(); // Empêcher l'écriture
             
             // Replacer le curseur après la checkbox
@@ -100,7 +134,7 @@ cell.addEventListener('keydown', function(e) {  // Au keydown
             return;
         }
         
-        // Bloquer les mouvements et suppressions (AJOUT DE Delete)
+        // Bloquer les mouvements et suppressions
         if (e.key === 'ArrowLeft' || e.key === 'Home' || e.key === 'Backspace' || e.key === 'Delete') {
             e.preventDefault(); // Bloquer le mouvement
             
@@ -109,10 +143,38 @@ cell.addEventListener('keydown', function(e) {  // Au keydown
             range.setStartAfter(checkbox); // Définir le début après la checkbox
             range.collapse(true); // Collapser la plage
             selection.removeAllRanges(); // Supprimer les plages existantes
-            selection.addRange(range); // Ajouter la nouvelle plage
+            selection.addRange(range); //
         }
     }
-});
+    
+    // Gérer Enter même si on n'est PAS à la position 0
+    if (e.key === 'Enter') { // Si Enter
+        e.preventDefault(); // Empêcher le retour à la ligne
+        
+        const currentCell = this; // Cellule actuelle
+        const currentIndex = Array.from(cells).indexOf(currentCell); // Index de la cellule actuelle
+        const columnsPerRow = 4; // Nombre de colonnes dans le tableau
+        const nextIndex = currentIndex + columnsPerRow; // Index de la cellule en dessous
+        
+        if (nextIndex < cells.length) { // Si la cellule en dessous existe
+            const nextCell = cells[nextIndex]; // Récupérer la cellule en dessous
+            nextCell.focus(); // Placer le focus sur la cellule en dessous
+            
+            const nextCheckbox = nextCell.querySelector('.checkbox'); // Récupérer la checkbox de la cellule suivante
+            const range = document.createRange(); // Créer une nouvelle plage
+            const newSelection = window.getSelection(); // Récupérer la sélection
+            
+            if (nextCheckbox) { // Si la checkbox existe
+                range.setStartAfter(nextCheckbox); // Définir le début après la checkbox
+            } else { // Si pas de checkbox (au cas où)
+                range.selectNodeContents(nextCell); // Sélectionner tout le contenu de la cellule
+            }
+            range.collapse(true); // Collapser la plage
+            newSelection.removeAllRanges(); // Supprimer les plages existantes
+            newSelection.addRange(range); // Ajouter la nouvelle plage
+        }
+    }
+}); // Accolade fermante ajoutée
 
     // Marquer comme modifiée dès qu'on tape quelque chose
     cell.addEventListener('input', function() { // Au changement de contenu
