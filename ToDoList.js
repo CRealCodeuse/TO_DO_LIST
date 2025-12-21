@@ -25,6 +25,20 @@ cells.forEach(cell => { // Pour chaque cellule
                 this.appendChild(checkbox); // Remettre la checkbox
             }
         }
+        // Si jamais modifiée et contient un texte par défaut
+        if (!hasBeenModified && 
+            (textOnly === '...' || // Texte par défaut
+             textOnly === 'Acheter des tomates' || // Texte par défaut
+             textOnly === 'Réviser la leçon de maths' || // Texte par défaut
+             textOnly === 'Faire la vaisselle' || // Texte par défaut
+             textOnly === 'Faire le modèle du site')) { // Texte par défaut
+            
+            // Vider uniquement le texte, garder la checkbox
+            this.innerHTML = ''; // Vider la cellule
+            if (checkbox) { // Si la checkbox existe
+                this.appendChild(checkbox); // Remettre la checkbox
+            }
+        }
     });
     
     // Empêcher la suppression de la checkbox
