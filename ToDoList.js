@@ -64,18 +64,28 @@ cells.forEach(cell => { // Pour chaque cellule
     // Forcer le curseur à se placer après la checkbox
 cell.addEventListener('click', function(e) { // Au clic dans la cellule
     const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
-    if (checkbox) { // Si la checkbox existe
+    
+    if (checkbox && e.target !== checkbox) { // Si la checkbox existe et le clic n'est pas sur elle
         const selection = window.getSelection(); // Récupérer la sélection
         const range = document.createRange(); // Créer une nouvelle plage
+        const textContent = this.textContent.trim(); // Récupérer le texte
         
-        // Si le clic est sur la cellule (pas sur la checkbox)
-        if (e.target !== checkbox) { // Si le clic n'est pas sur la checkbox
-            // Placer le curseur après la checkbox
+        // Vérifier si la cellule a été modifiée (différente des valeurs par défaut)
+        const defaultValues = ['...', 'Buy tomatoes', 'Review the math lesson', 'Wash the dishes', 'Do the site\'s template']; // Valeurs par défaut
+        const isModified = !defaultValues.includes(textContent) && textContent !== ''; // Vrai si modifiée
+        
+        if (isModified) { 
+            // Cellule modifiée : placer le curseur à la fin du texte
+            range.selectNodeContents(this); // Sélectionner tout le contenu
+            range.collapse(false); // false = à la fin
+        } else {
+            // Cellule non modifiée : placer le curseur après la checkbox
             range.setStartAfter(checkbox); // Définir le début après la checkbox
             range.collapse(true); // Collapser la plage
-            selection.removeAllRanges(); // Supprimer les plages existantes
-            selection.addRange(range); // Ajouter la nouvelle plage
         }
+        
+        selection.removeAllRanges(); // Supprimer les plages existantes
+        selection.addRange(range); // Ajouter la nouvelle plage
     }
 });
 
