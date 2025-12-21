@@ -15,7 +15,7 @@ cells.forEach(cell => { // Pour chaque cellule
         if (!hasBeenModified && 
             (textOnly === '...' || // Texte par défaut
              textOnly === 'Buy tomatoes' || // Texte par défaut
-             textOnly === 'Study math' || // Texte par défaut
+             textOnly === 'Review the math lesson' || // Texte par défaut
              textOnly === 'Wash the dishes' || // Texte par défaut
              textOnly === 'Do the site\'s template')) { // Texte par défaut
             
