@@ -237,27 +237,26 @@ const Empty = document.querySelector('button[class="Empty"]'); // Sélectionner 
 
 Empty.addEventListener('click', function() { // Au clic sur le bouton
     // VÉRIFIER LA LANGUE EN PREMIER
-    const frenchButton = document.querySelector('.Francais');
-    const isFrench = frenchButton && frenchButton.classList.contains('clicked');
-    // Définir les valeurs par défaut pour chaque cellule
+    const frenchButton = document.querySelector('.Francais'); // Sélectionner le bouton "Francais"
+    const isFrench = frenchButton && frenchButton.classList.contains('clicked'); // Vérifier si le bouton a la classe 'clicked'
     // Définir les valeurs par défaut SELON LA LANGUE
-    const defaultValues = isFrench ? [
-        'Acheter des tomates',
-        'Réviser la leçon de maths',
-        'Faire la vaisselle',
-        'Faire le modèle du site',
-        '...'
+    const defaultValues = isFrench ? [ // Si français
+        'Acheter des tomates', // Texte par défaut
+        'Réviser la leçon de maths', // Texte par défaut
+        'Faire la vaisselle', // Texte par défaut
+        'Faire le modèle du site', // Texte par défaut
+        '...' // Texte par défaut
     ] : [
-        'Buy tomatoes',
-        'Review the math lesson',
-        'Wash the dishes',
-        'Do the site\'s template',
+        'Buy tomatoes', // Texte par défaut
+        'Review the math lesson', // Texte par défaut
+        'Wash the dishes', // Texte par défaut
+        'Do the site\'s template', // Texte par défaut
         '...'
     ];
     
     // Vérifier si des tâches modifiées ne sont pas cochées
-    let hasUnfinishedTasksEnglish = false;
-    let hasUnfinishedTasksFrench= false;
+    let hasUnfinishedTasksEnglish = false; // Variable pour les tâches non terminées en anglais
+    let hasUnfinishedTasksFrench= false; // Variable pour les tâches non terminées en français
     
     cells.forEach(cell => { // Pour chaque cellule
         const checkbox = cell.querySelector('.checkbox'); // Récupérer la checkbox
@@ -416,10 +415,10 @@ Francais.addEventListener('click', function() { // Au clic sur le bouton
     // AJOUTER/RETIRER LA CLASSE 'clicked'
     if (isTranslated) {
         // Retour à l'anglais
-        this.classList.remove('clicked');
-    } else {
+        this.classList.remove('clicked'); // Retirer la classe
+    } else { 
         // Passage au français
-        this.classList.add('clicked');
+        this.classList.add('clicked'); // Ajouter la classe
     }
     
     // Inverser l'état
