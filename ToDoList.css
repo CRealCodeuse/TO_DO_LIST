@@ -32,6 +32,7 @@ table { /*ensemble du tableau*/
     box-sizing: border-box; /*inclure la bordure et la marge dans la largeur totale*/
     padding: 10px; /*espace entre le contenu et la bordure*/
     box-shadow: 0 10px 10px 5px rgba(0,0,0,0.6); /* Ombre */
+    background-color: darkcyan;
 }
 
 tr { /*ligne du tableau*/
