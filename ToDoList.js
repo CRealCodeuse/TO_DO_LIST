@@ -8,27 +8,111 @@ cells.forEach(cell => { // Pour chaque cellule
     
     // Au focus (clic sur la cellule)
     cell.addEventListener('focus', function() { // Au focus
-        // Si jamais modifiée et contient "..."
-        if (!hasBeenModified && this.textContent.trim() === '...') {
-            this.textContent = ''; // Vider la cellule
-        }
-        // Si jamais modifiée et contient "Buy some tomatoes"
-        if (!hasBeenModified && this.textContent.trim() === 'Buy tomatoes') {
-            this.textContent = ''; // Vider la cellule
-        }
-        // Si jamais modifiée et contient "Study math"
-        if (!hasBeenModified && this.textContent.trim() === 'Study math') {
-            this.textContent = ''; // Vider la cellule
-        }
-        // Si jamais modifiée et contient "Wash the dishes"
-        if (!hasBeenModified && this.textContent.trim() === 'Wash the dishes') {
-            this.textContent = ''; // Vider la cellule
-        }
-        // Si jamais modifiée et contient "Do the site's template"
-        if (!hasBeenModified && this.textContent.trim() === 'Do the site\'s template') {
-            this.textContent = ''; // Vider la cellule
+        const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
+        const textOnly = this.textContent.trim(); // Récupérer uniquement le texte
+        
+        // Si jamais modifiée et contient un texte par défaut
+        if (!hasBeenModified && 
+            (textOnly === '...' || // Texte par défaut
+             textOnly === 'Buy tomatoes' || // Texte par défaut
+             textOnly === 'Study math' || // Texte par défaut
+             textOnly === 'Wash the dishes' || // Texte par défaut
+             textOnly === 'Do the site\'s template')) { // Texte par défaut
+            
+            // Vider uniquement le texte, garder la checkbox
+            this.innerHTML = ''; // Vider la cellule
+            if (checkbox) { // Si la checkbox existe
+                this.appendChild(checkbox); // Remettre la checkbox
+            }
         }
     });
+    
+    // Empêcher la suppression de la checkbox
+    cell.addEventListener('keydown', function(e) { // Au keydown
+        const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
+        const selection = window.getSelection(); // Récupérer la sélection
+        
+        // Si Backspace ou Delete
+        if (e.key === 'Backspace' || e.key === 'Delete') { // Si Backspace ou Delete
+            // Si le curseur est juste après la checkbox (position 0 ou 1)
+            if (checkbox && selection.anchorOffset === 0) { // Position avant ou sur la checkbox
+                e.preventDefault(); // Empêcher la suppression
+            }
+        }
+    });
+    
+    // Empêcher la suppression de la checkbox lors de l'édition
+    cell.addEventListener('input', function() { // Au changement de contenu
+        const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
+        
+        // Si la checkbox a disparu, la recréer
+        if (!checkbox) { // Si pas de checkbox
+            const newCheckbox = document.createElement('input'); // Créer une nouvelle checkbox
+            newCheckbox.type = 'checkbox'; // Définir le type
+            newCheckbox.className = 'checkbox'; // Définir la classe
+            newCheckbox.title = 'checkbox'; // Définir le titre
+            newCheckbox.contentEditable = 'false'; // Rendre non éditable
+            newCheckbox.onclick = function(event) { // Empêcher la propagation du clic
+                event.stopPropagation(); // Empêcher la propagation
+            };
+            
+            // Insérer la checkbox au début
+            this.insertBefore(newCheckbox, this.firstChild); 
+        }
+    });
+
+    // Forcer le curseur à se placer après la checkbox
+cell.addEventListener('click', function(e) { // Au clic dans la cellule
+    const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
+    if (checkbox) { // Si la checkbox existe
+        const selection = window.getSelection(); // Récupérer la sélection
+        const range = document.createRange(); // Créer une nouvelle plage
+        
+        // Si le clic est sur la cellule (pas sur la checkbox)
+        if (e.target !== checkbox) { // Si le clic n'est pas sur la checkbox
+            // Placer le curseur après la checkbox
+            range.setStartAfter(checkbox); // Définir le début après la checkbox
+            range.collapse(true); // Collapser la plage
+            selection.removeAllRanges(); // Supprimer les plages existantes
+            selection.addRange(range); // Ajouter la nouvelle plage
+        }
+    }
+});
+
+// Empêcher le curseur de revenir avant la checkbox avec les touches
+cell.addEventListener('keydown', function(e) {  // Au keydown
+    const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
+    const selection = window.getSelection(); // Récupérer la sélection
+    
+    if (checkbox && selection.anchorOffset === 0) { 
+        // Si on est à la position 0 (avant la checkbox)
+        
+        // Bloquer TOUTE saisie de caractères (lettres, chiffres, symboles, espace, etc.)
+        if (e.key.length === 1 || e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault(); // Empêcher l'écriture
+            
+            // Replacer le curseur après la checkbox
+            const range = document.createRange(); // Créer une nouvelle plage
+            range.setStartAfter(checkbox); // Définir le début après la checkbox
+            range.collapse(true); // Collapser la plage
+            selection.removeAllRanges(); // Supprimer les plages existantes
+            selection.addRange(range); // Ajouter la nouvelle plage
+            return;
+        }
+        
+        // Bloquer les mouvements et suppressions (AJOUT DE Delete)
+        if (e.key === 'ArrowLeft' || e.key === 'Home' || e.key === 'Backspace' || e.key === 'Delete') {
+            e.preventDefault(); // Bloquer le mouvement
+            
+            // Replacer le curseur après la checkbox
+            const range = document.createRange(); // Créer une nouvelle plage
+            range.setStartAfter(checkbox); // Définir le début après la checkbox
+            range.collapse(true); // Collapser la plage
+            selection.removeAllRanges(); // Supprimer les plages existantes
+            selection.addRange(range); // Ajouter la nouvelle plage
+        }
+    }
+});
 
     // Marquer comme modifiée dès qu'on tape quelque chose
     cell.addEventListener('input', function() { // Au changement de contenu
@@ -37,47 +121,68 @@ cells.forEach(cell => { // Pour chaque cellule
     
     // Si l'utilisateur quitte la cellule vide, remettre "..."
     cell.addEventListener('blur', function() { // Au blur (quitter la cellule)
-        if (this.textContent.trim() === '') { // Si vide
-            this.textContent = '...'; // Remettre "..."
-            hasBeenModified = false; // Réinitialiser pour permettre un nouveau clic
+    if (this.textContent.trim() === '') { // Si vide
+        // Récupérer ou créer la checkbox
+        let checkbox = this.querySelector('.checkbox'); // Chercher la checkbox existante
+        
+        if (!checkbox) { // Si pas de checkbox, en créer une
+            checkbox = document.createElement('input'); // Créer une nouvelle checkbox
+            checkbox.type = 'checkbox'; // Définir le type
+            checkbox.className = 'checkbox'; // Définir la classe
+            checkbox.title = 'checkbox'; // Définir le titre
+            checkbox.contentEditable = 'false'; // Rendre non éditable
+            checkbox.onclick = function(event) { // Empêcher la propagation du clic
+                event.stopPropagation(); // Empêcher la propagation
+            };
         }
-    });
+        
+        // Vider et restaurer avec checkbox + texte par défaut
+        this.innerHTML = ''; // Vider la cellule
+        this.appendChild(checkbox); // Ajouter la checkbox
+        this.appendChild(document.createTextNode('...')); // Ajouter le texte par défaut
+        
+        hasBeenModified = false; // Réinitialiser pour permettre un nouveau clic
+    }
+});
 });
 
 const Empty = document.querySelector('button[class="Empty"]'); // Sélectionner le bouton "Empty"
 
 Empty.addEventListener('click', function() { // Au clic sur le bouton
-    cells.forEach(cell => { // Pour chaque cellule
-        // Si la cellule contient "..."
-            if (cell.textContent.trim() === '...') {
-                cell.textContent = '...'; // Remettre "..."
-            }
-            // Si la cellule contient "Buy tomatoes"
-            if (cell.textContent.trim() === 'Buy tomatoes') {
-                cell.textContent = 'Buy tomatoes'; // Remettre "Buy some tomatoes"
-            }
-            // Si la cellule contient "Study math"
-            if (cell.textContent.trim() === 'Review the math lesson') {
-                cell.textContent = 'Review the math lesson'; // Remettre "Study math"
-            }
-            // Si la cellule contient "Wash the dishes"
-            if (cell.textContent.trim() === 'Wash the dishes') {
-                cell.textContent = 'Wash the dishes'; // Remettre "Wash the dishes"
-            }
-            // Si la cellule contient "Do the site's template"
-            if (cell.textContent.trim() === 'Do the site\'s template') {
-                cell.textContent = 'Do the site\'s template'; // Remettre "Do the site's template"
-            }
-            // Si la cellule contient n'importe quel texte (non vide et différent des valeurs par défaut)
-            if (cell.textContent.trim() !== '' && // Non vide
-                cell.textContent.trim() !== '...' && // Différent de "..."
-                cell.textContent.trim() !== 'Buy tomatoes' && // Différent de "Buy some tomatoes"
-                cell.textContent.trim() !== 'Review the math lesson' && // Différent de "Study math"
-                cell.textContent.trim() !== 'Wash the dishes' && // Différent de "Wash the dishes"
-                cell.textContent.trim() !== 'Do the site\'s template') { // Différent de "Do the site's template"
-                cell.textContent = '...'; // Remettre "..."
-            }
-        });
+    // Définir les valeurs par défaut pour chaque cellule
+    const defaultValues = [ // Valeurs par défaut
+        'Buy tomatoes', // Cellule 1
+        'Review the math lesson', // Cellule 2
+        'Wash the dishes', // Cellule 3
+        'Do the site\'s template', // Cellule 4
+        '...' // Cellule 5 et les suivantes
+    ];
+    
+    cells.forEach((cell, index) => { // Pour chaque cellule
+        // Récupérer ou créer la checkbox
+        let checkbox = cell.querySelector('.checkbox'); // Chercher la checkbox existante
+        
+        if (!checkbox) { 
+            // Si pas de checkbox, en créer une
+            checkbox = document.createElement('input'); // Créer une nouvelle checkbox
+            checkbox.type = 'checkbox'; // Définir le type
+            checkbox.className = 'checkbox'; // Définir la classe
+            checkbox.title = 'checkbox'; // Définir le titre
+            checkbox.contentEditable = 'false'; // Rendre non éditable
+            checkbox.onclick = function(event) { 
+                event.stopPropagation(); // Empêcher la propagation
+            };
+        }
+        
+        // Réinitialiser l'état de la checkbox (décochée)
+        checkbox.checked = false;
+        
+        // Réinitialiser le contenu de la cellule
+        const defaultText = defaultValues[index] || '...'; // Texte par défaut selon l'index
+        cell.innerHTML = ''; // Vider la cellule
+        cell.appendChild(checkbox); // Ajouter la checkbox
+        cell.appendChild(document.createTextNode(defaultText)); // Ajouter le texte par défaut
+    });
 });
 
 const Francais = document.querySelector('button[class="Francais"]'); // Sélectionner le bouton "Français"
