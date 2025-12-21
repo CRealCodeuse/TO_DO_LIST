@@ -231,6 +231,54 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
         '...' // Cellule 5 et les suivantes
     ];
     
+    // Vérifier si des tâches modifiées ne sont pas cochées
+    let hasUnfinishedTasksEnglish = false;
+    let hasUnfinishedTasksFrench= false;
+    
+    cells.forEach(cell => { // Pour chaque cellule
+        const checkbox = cell.querySelector('.checkbox'); // Récupérer la checkbox
+        const textContent = cell.textContent.trim(); // Récupérer le texte
+        
+        // Si la cellule a été modifiée (différente des valeurs par défaut) et checkbox non cochée
+        if (textContent !== '' && // Pas vide
+            textContent !== '...' && // Pas valeur par défaut
+            textContent !== 'Buy tomatoes' && // Pas valeur par défaut
+            textContent !== 'Review the math lesson' && // Pas valeur par défaut
+            textContent !== 'Wash the dishes' && // Pas valeur par défaut
+            textContent !== 'Do the site\'s template' && // Pas valeur par défaut
+            checkbox && // Si la checkbox existe
+            !checkbox.checked) { // Et non cochée
+            
+            hasUnfinishedTasksEnglish = true; // Marquer comme tâche non terminée
+        }
+        else if (textContent === '' && // Si vide
+                 textContent === '...' && // Ou valeur par défaut
+                 textContent === 'Acheter des tomates' && // Ou valeur par défaut
+                 textContent === 'Réviser la leçon de maths' && // Ou valeur par défaut
+                 textContent === 'Faire la vaisselle' && // Ou valeur par défaut
+                 textContent === 'Faire le modèle du site' && // Ou valeur par défaut) 
+                 checkbox && // Si la checkbox existe
+                 !checkbox.checked) { // Et non cochée
+            
+                hasUnfinishedTasksFrench = true; // Marquer comme tâche non terminée
+        }
+    });
+    
+    // Vérifier la langue UNE SEULE FOIS au début
+    const frenchButton = document.querySelector('.Francais'); // Sélectionner le bouton "Francais"
+    const isFrench = frenchButton && frenchButton.classList.contains('clicked'); // Vérifier si le bouton a été cliqué (indiquant le français)
+    
+    // Si des tâches ne sont pas terminées, afficher un Toast
+    if (hasUnfinishedTasksEnglish) { // Si des tâches non terminées en anglais
+    showToast("You haven't finished all your tasks!", 'error'); // Afficher le message en anglais
+    return; // Sortir de la fonction
+    }
+    if (hasUnfinishedTasksFrench) { // Si des tâches non terminées en français
+        showToast("Tu n'as pas fini toutes tes tâches !", 'error'); // Afficher le message en français
+        return; // Sortir de la fonction
+    }
+    
+    // Sinon, réinitialiser toutes les cellules
     cells.forEach((cell, index) => { // Pour chaque cellule
         // Récupérer ou créer la checkbox
         let checkbox = cell.querySelector('.checkbox'); // Chercher la checkbox existante
@@ -256,20 +304,74 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
         cell.appendChild(checkbox); // Ajouter la checkbox
         cell.appendChild(document.createTextNode(defaultText)); // Ajouter le texte par défaut
     });
+    
+    // Afficher un Toast de succès
+    const successMessage = isFrench ? 
+        "Génial ! De nouvelles tâches arrivent !" : // Message en français
+        "Good Job! New tasks incoming!"; // Message en anglais
+    showToast(successMessage, 'success'); // Afficher le message
 });
 
-//TRADUCTION FRANÇAIS/ANGLAIS
-const Francais = document.querySelector('button[class="Francais"]'); // Sélectionner le bouton "Français"
+// Fonction pour afficher un Toast
+function showToast(message, type = 'info') { // 
+    const toast = document.createElement('div'); // Créer un élément div pour le toast
+    toast.textContent = message; // Définir le message
+    
+    // Styles de base
+    toast.style.position = 'fixed'; // Position fixe
+    toast.style.top = '20px'; // Distance du haut
+    toast.style.right = '20px'; // Distance de la droite
+    toast.style.padding = '15px 20px'; // Padding
+    toast.style.borderRadius = '8px'; // Bords arrondis
+    toast.style.color = 'white'; // Couleur du texte
+    toast.style.fontWeight = 'bold'; // Texte en gras
+    toast.style.zIndex = '9999'; // Au-dessus des autres éléments
+    toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)'; // Ombre
+    toast.style.fontSize = '14px'; // Taille de la police
+    toast.style.maxWidth = '300px'; // Largeur maximale
+    toast.style.opacity = '0'; // Initialement invisible
+    toast.style.transform = 'translateX(400px)'; // Position initiale à droite
+    toast.style.transition = 'all 0.3s ease'; // Transition pour l'animation
+    
+    // Couleurs selon le type
+    if (type === 'success') { // Si succès
+        toast.style.backgroundColor = '#4caf50'; // Vert
+    } else if (type === 'error') { // Si erreur
+        toast.style.backgroundColor = '#f44336'; // Rouge
+    } else if (type === 'warning') { // Si avertissement
+        toast.style.backgroundColor = '#ff9800'; // Orange
+    } else { // Info par défaut
+        toast.style.backgroundColor = '#2196f3'; // Bleu
+    }
+    
+    document.body.appendChild(toast); // Ajouter le toast au corps de la page
+    
+    // Animation d'entrée
+    setTimeout(() => { // Petit délai pour permettre le rendu initial
+        toast.style.opacity = '1'; // Rendre visible
+        toast.style.transform = 'translateX(0)'; // Position normale
+    }, 10); // Délai minimal
+    
+    // Animation de sortie et suppression
+    setTimeout(() => { // Après 3 secondes
+        toast.style.opacity = '0'; // Rendre invisible
+        toast.style.transform = 'translateX(400px)'; // Déplacer à droite
+        setTimeout(() => toast.remove(), 300); // Supprimer après l'animation
+    }, 3000); // Durée d'affichage
+}
+
+//TRADUCTION Francais/ANGLAIS
+const Francais = document.querySelector('button[class="Francais"]'); // Sélectionner le bouton "Francais"
 
 let isTranslated = false; // Variable pour suivre l'état de traduction
 
 Francais.addEventListener('click', function() { // Au clic sur le bouton
-    const translations = { // Dictionnaire de traduction (anglais → français)
+    const translations = { // Dictionnaire de traduction (anglais → Francais)
         '...': '...',
         'What should I do today ?': 'Que dois-je faire aujourd\'hui ?',
         'Buy tomatoes': 'Acheter des tomates',
         'Review the math lesson': 'Réviser la leçon de maths',
-        'Wash the dishes': 'Laver la vaisselle',
+        'Wash the dishes': 'Faire la vaisselle',
         'Do the site\'s template': 'Faire le modèle du site',
         'Hey there !': 'Bienvenue !',
         'Here is a simple to-do list where you can write down your tasks for today (or for the week).': 'Voici ta propre liste de tâches où tu peux écrire tout ce que tu as à faire pour aujourd\'hui (ou dans la semaine).',
@@ -283,7 +385,7 @@ Francais.addEventListener('click', function() { // Au clic sur le bouton
         'Français': 'Anglais'
     };
     
-    // Créer un objet inverse pour la traduction retour (français → anglais)
+    // Créer un objet inverse pour la traduction retour (Francais → anglais)
     const reverseTranslations = {}; // Dictionnaire inverse
     for (let key in translations) { // Parcourir les clés du dictionnaire original
         reverseTranslations[translations[key]] = key; // Inverser clé et valeur
