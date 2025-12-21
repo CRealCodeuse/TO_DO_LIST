@@ -139,7 +139,7 @@ cell.addEventListener('keydown', function(e) {  // Au keydown
         // Vider et restaurer avec checkbox + texte par défaut
         this.innerHTML = ''; // Vider la cellule
         this.appendChild(checkbox); // Ajouter la checkbox
-        this.appendChild(document.createTextNode('...')); // Ajouter le texte par défaut
+        this.appendChild(document.createTextNode('...'));
         
         hasBeenModified = false; // Réinitialiser pour permettre un nouveau clic
     }
