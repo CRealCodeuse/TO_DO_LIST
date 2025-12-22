@@ -41,20 +41,6 @@ cells.forEach(cell => { // Pour chaque cellule
         }
     });
     
-    // Empêcher la suppression de la checkbox
-    cell.addEventListener('keydown', function(e) { // Au keydown
-        const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
-        const selection = window.getSelection(); // Récupérer la sélection
-        
-        // Si Backspace ou Delete
-        if (e.key === 'Backspace' || e.key === 'Delete') { // Si Backspace ou Delete
-            // Si le curseur est juste après la checkbox (position 0 ou 1)
-            if (checkbox && selection.anchorOffset === 0) { // Position avant ou sur la checkbox
-                e.preventDefault(); // Empêcher la suppression
-            }
-        }
-    });
-    
     // Empêcher la suppression de la checkbox lors de l'édition
     cell.addEventListener('input', function() { // Au changement de contenu
         const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
@@ -251,7 +237,7 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
         'Review the math lesson', // Texte par défaut
         'Wash the dishes', // Texte par défaut
         'Do the site\'s template', // Texte par défaut
-        '...'
+        '...' // Texte par défaut
     ];
     
     // Vérifier si des tâches modifiées ne sont pas cochées
