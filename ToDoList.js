@@ -262,19 +262,19 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
         const textContent = cell.textContent.trim(); // Récupérer le texte
         
         // Si modifié ET non coché
-        if (textContent !== '' && !defaultValues.includes(textContent) && checkbox && !checkbox.checked) {
-            hasUnfinishedTasks = true;
+        if (textContent !== '' && !defaultValues.includes(textContent) && checkbox && !checkbox.checked) { // Si modifié et non coché
+            hasUnfinishedTasks = true; // Marquer comme ayant des tâches non terminées
         }
     });
     
     // Afficher le toast SELON LA LANGUE
-    if (hasUnfinishedTasks) {
-        const message = isFrench ? 
-            "Tu n'as pas fini toutes tes tâches !" : 
-            "You haven't finished all your tasks!";
+    if (hasUnfinishedTasks) { // Si des tâches non terminées existent
+        const message = isFrench ? //  Vérifier la langue
+            "Tu n'as pas fini toutes tes tâches !" : // Message en français
+            "You haven't finished all your tasks!"; // Message en anglais
         
-        showToast(message, 'error');
-        return;
+        showToast(message, 'error'); // Afficher le message d'erreur
+        return; // Sortir de la fonction sans réinitialiser
     }
     
     // Sinon, réinitialiser toutes les cellules
