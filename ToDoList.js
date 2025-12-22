@@ -11,32 +11,28 @@ cells.forEach(cell => { // Pour chaque cellule
         const checkbox = this.querySelector('.checkbox'); // Récupérer la checkbox
         const textOnly = this.textContent.trim(); // Récupérer uniquement le texte
         
-        // Si jamais modifiée et contient un texte par défaut
-        if (!hasBeenModified && 
-            (textOnly === '...' || // Texte par défaut
-             textOnly === 'Buy tomatoes' || // Texte par défaut
-             textOnly === 'Review the math lesson' || // Texte par défaut
-             textOnly === 'Wash the dishes' || // Texte par défaut
-             textOnly === 'Do the site\'s template')) { // Texte par défaut
-            
+        // Liste de toutes les valeurs par défaut (anglais + français)
+        const defaultValues = [ // Valeurs par défaut
+            '...', // Texte par défaut
+            'Buy tomatoes', // Texte par défaut
+            'Review the math lesson', // Texte par défaut
+            'Wash the dishes', // Texte par défaut
+            "Do the site's template", // Texte par défaut
+            'Acheter des tomates', // Texte par défaut
+            'Réviser la leçon de maths', // Texte par défaut
+            'Faire la vaisselle', // Texte par défaut
+            'Faire le modèle du site' // Texte par défaut
+        ];
+        
+        // Normaliser le texte en remplaçant les apostrophes courbes par des droites
+        const normalizedText = textOnly.replace(/'/g, "'");
+
+        // Si jamais modifiée ET contient un texte par défaut
+        if (!hasBeenModified && defaultValues.includes(textOnly)) {
             // Vider uniquement le texte, garder la checkbox
             this.innerHTML = ''; // Vider la cellule
             if (checkbox) { // Si la checkbox existe
-                this.appendChild(checkbox); // Remettre la checkbox
-            }
-        }
-        // Si jamais modifiée et contient un texte par défaut
-        if (!hasBeenModified && 
-            (textOnly === '...' || // Texte par défaut
-             textOnly === 'Acheter des tomates' || // Texte par défaut
-             textOnly === 'Réviser la leçon de maths' || // Texte par défaut
-             textOnly === 'Faire la vaisselle' || // Texte par défaut
-             textOnly === 'Faire le modèle du site')) { // Texte par défaut
-            
-            // Vider uniquement le texte, garder la checkbox
-            this.innerHTML = ''; // Vider la cellule
-            if (checkbox) { // Si la checkbox existe
-                this.appendChild(checkbox); // Remettre la checkbox
+                this.appendChild(checkbox); // Ajouter la checkbox
             }
         }
     });
@@ -68,11 +64,31 @@ cell.addEventListener('click', function(e) { // Au clic dans la cellule
     if (checkbox && e.target !== checkbox) { // Si la checkbox existe et le clic n'est pas sur elle
         const selection = window.getSelection(); // Récupérer la sélection
         const range = document.createRange(); // Créer une nouvelle plage
-        const textContent = this.textContent.trim(); // Récupérer le texte
+        const textOnly = this.textContent.trim(); // Récupérer le texte
         
-        // Vérifier si la cellule a été modifiée (différente des valeurs par défaut)
-        const defaultValues = ['...', 'Buy tomatoes', 'Review the math lesson', 'Wash the dishes', 'Do the site\'s template']; // Valeurs par défaut
-        const isModified = !defaultValues.includes(textContent) && textContent !== ''; // Vrai si modifiée
+        
+        // Définir les valeurs par défaut selon la langue
+        const defaultValues = isFrench ? [ // Si français
+            '...', // Texte par défaut
+            'Acheter des tomates', // Texte par défaut
+            'Réviser la leçon de maths', // Texte par défaut
+            'Faire la vaisselle', // Texte par défaut
+            'Faire le modèle du site' // Texte par défaut
+        ] : [
+            '...', // Texte par défaut
+            'Buy tomatoes', // Texte par défaut
+            'Review the math lesson', // Texte par défaut
+            'Wash the dishes', // Texte par défaut
+            'Do the site\'s template' // Texte par défaut
+        ];
+        // Si jamais modifiée ET contient un texte par défaut
+        if (!hasBeenModified && defaultValues.includes(textOnly)) {
+            // Vider uniquement le texte, garder la checkbox
+            this.innerHTML = ''; // Vider la cellule
+            if (checkbox) { // Si la checkbox existe
+                this.appendChild(checkbox); // Ajouter la checkbox
+            }
+        }
         
         if (isModified) { 
             // Cellule modifiée : placer le curseur à la fin du texte
