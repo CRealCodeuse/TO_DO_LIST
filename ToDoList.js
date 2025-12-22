@@ -255,8 +255,7 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
     ];
     
     // Vérifier si des tâches modifiées ne sont pas cochées
-    let hasUnfinishedTasksEnglish = false; // Variable pour les tâches non terminées en anglais
-    let hasUnfinishedTasksFrench= false; // Variable pour les tâches non terminées en français
+    let hasUnfinishedTasks = false;
     
     cells.forEach(cell => { // Pour chaque cellule
         const checkbox = cell.querySelector('.checkbox'); // Récupérer la checkbox
@@ -264,22 +263,18 @@ Empty.addEventListener('click', function() { // Au clic sur le bouton
         
         // Si modifié ET non coché
         if (textContent !== '' && !defaultValues.includes(textContent) && checkbox && !checkbox.checked) {
-            hasUnfinishedTasksEnglish = true; // Marquer comme tâche non terminée
-        }
-        // Si modifié ET non coché
-        if (textContent !== '' && !defaultValues.includes(textContent) && checkbox && !checkbox.checked) {
-            hasUnfinishedTasksFrench = true; // Marquer comme tâche non terminée
+            hasUnfinishedTasks = true;
         }
     });
     
-    // Si des tâches ne sont pas terminées, afficher un Toast
-    if (hasUnfinishedTasksEnglish) { // Si des tâches non terminées en anglais
-    showToast("You haven't finished all your tasks!", 'error'); // Afficher le message en anglais
-    return; // Sortir de la fonction
-    }
-    if (hasUnfinishedTasksFrench) { // Si des tâches non terminées en français
-    showToast("Tu n'as pas fini toutes tes tâches !", 'error'); // Afficher le message en français
-    return; // Sortir de la fonction
+    // Afficher le toast SELON LA LANGUE
+    if (hasUnfinishedTasks) {
+        const message = isFrench ? 
+            "Tu n'as pas fini toutes tes tâches !" : 
+            "You haven't finished all your tasks!";
+        
+        showToast(message, 'error');
+        return;
     }
     
     // Sinon, réinitialiser toutes les cellules
